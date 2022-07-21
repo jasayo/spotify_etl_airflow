@@ -6,7 +6,7 @@ from spoty_etl.models import TABLENAME
 import pandas as pd
 from sqlalchemy import create_engine
 
-
+#breakpoint()
 scope = "user-read-recently-played"
 
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=CLIENT_ID,
@@ -15,18 +15,18 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=CLIENT_ID,
                                                scope=scope))
 
 
-def extract(date, limit=50):
+def extract(execution_date, limit=50):
     """Get limit elements from last listen tracks
 
     Args:
         ds (datetime): Date to query
         limit (int): Limit of element to query
     """
-    ds = int(date.timestamp()) * 1000
+    ds = int(execution_date.timestamp()) * 1000
     return sp.current_user_recently_played(limit=limit, after=ds)
 
 
-def transform(raw_data, date):
+def transform(raw_data, execution_date):
     data = []
     for r in raw_data["items"]:
         data.append(
@@ -56,8 +56,8 @@ def load(df):
     engine = create_engine(DB_CONNSTR)
     df.to_sql(TABLENAME, con=engine, index=False, if_exists='append')
 
-
-if __name__ == "__main__":
+# airflow identifica con una macro el execution date 
+def run_etl(execution_date):
     date = datetime.today() - timedelta(days=1)
 
     # Extract
@@ -71,3 +71,8 @@ if __name__ == "__main__":
     # Load
     load(clean_df)
     print("Done")
+
+
+if __name__ == "__main__":
+    date = datetime.today() - timedelta(days=1)
+    run_etl(date)

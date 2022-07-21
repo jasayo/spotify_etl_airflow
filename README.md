@@ -1,12 +1,10 @@
+# Template ETL Airflow 
 # Spotify ETL POC
-This POC extract data from the Spotify API, transform the data filtering unwanted records and loads to PG database using Alembic for database versioning.
 
-## Inspired on
-Karolina Sowinska - Data Engineering
-https://www.youtube.com/playlist?list=PLNkCniHtd0PNM4NZ5etgYMw4ojid0Aa6i
+This POC extract data from the Spotify API, transform the data filtering unwanted records and loads to PG database using Alembic for database versioning. Use K8s, Docker, XCOM, Decorators, Providers, Python3
 
 ## Extract
-I am using the spotify api to extract data from my account
+Obtain the last posdcast that i listen using the spotify api to extract data from my account
 ### Get Spotify creds
 https://developer.spotify.com/dashboard/login
 
@@ -46,3 +44,6 @@ alembic revision --autogenerate -m "First"
 ```
 alembic upgrade head
 ```
+
+This project runs at minikube, has pods & make the migration data task.
+@2022 Sayo P.J. Andersson

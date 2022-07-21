@@ -2,7 +2,7 @@
 name = "spoty_etl"
 version = "0.1.0"
 description = ""
-authors = ["rishis07 <risheric@gmail.com>"]
+authors = ["jasayo76@gmail.com"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
